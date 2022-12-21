@@ -1,13 +1,17 @@
 // SCHEMA TYPES
+export type DBSchema = Record<string, DBSchemaProp>;
+
+type DBSchemaProp = {
+  [key: string]: DBSchemaType | DBSchemaProp;
+};
 type DBSchemaType = "string" | "boolean";
-export type DBSchema = Record<string, DBSchemaType>;
 
 // SYMPOSIO TYPES
-export interface SymposioDB {
-  schema: DBSchema;
+export interface SymposioDB<S> {
+  schema: S;
 }
 
 // Create Database
-export function createDB(schema: DBSchema): SymposioDB {
+export function createDB<S extends DBSchemaProp>(schema: S): SymposioDB<S> {
   return { schema };
 }
