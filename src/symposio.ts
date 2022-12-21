@@ -15,7 +15,11 @@ export interface SymposioDB<S> {
 type MapSchemaType<T> = {
   [K in keyof T]: ResolveTypes<T[K]>;
 };
-type ResolveTypes<Type> = Type extends "string" ? string : boolean;
+type ResolveTypes<Type> = Type extends "string"
+  ? string
+  : Type extends "boolean"
+  ? boolean
+  : { [K in keyof Type]: ResolveTypes<Type[K]> };
 
 // ==============
 // MAIN FUNCTIONS
