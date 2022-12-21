@@ -11,7 +11,24 @@ export interface SymposioDB<S> {
   schema: S;
 }
 
+// TYPE UTILS
+type MapSchemaType<T> = {
+  [K in keyof T]: ResolveTypes<T[K]>;
+};
+type ResolveTypes<Type> = Type extends "string" ? string : boolean;
+
+// ==============
+// MAIN FUNCTIONS
+// ==============
+
 // Create Database
 export function createDB<S extends DBSchemaProp>(schema: S): SymposioDB<S> {
-  return { schema };
+  const instance = { schema };
+  return instance;
 }
+
+// Insert
+export function insert<S extends DBSchemaProp>(
+  db: SymposioDB<S>,
+  record: MapSchemaType<S>
+): void {}
